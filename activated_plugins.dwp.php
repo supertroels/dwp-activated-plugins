@@ -52,8 +52,9 @@ class deploy_activated_plugins extends deployWP_module {
 	function deploy(){
 		/* Collect code goes here */
 		if(file_exists($this->deploy_file)){
-			if($ac = json_decode(file_get_contents($this->deploy_file))){
-				$current_ac = get_option('active_plugins');
+			if($ac = json_decode(file_get_contents($this->deploy_file), JSON_ARRAY)){
+				if(!$current_ac = get_option('active_plugins') or !is_array($current_ac))
+					$current_ac = array();
 				update_option('active_plugins', array_merge($current_ac, $ac));
 
 			}
@@ -63,8 +64,9 @@ class deploy_activated_plugins extends deployWP_module {
 
 	function add_deploy_notice($plugin_meta, $plugin_file, $plugin_data, $status){
 
+		if(file)
 		if(file_exists($this->deploy_file)){
-			if($ac = json_decode(file_get_contents($this->deploy_file))){
+			if($ac = json_decode(file_get_contents($this->deploy_file), JSON_ARRAY)){
 				if(in_array($plugin_file, $ac)){
 					$plugin_meta[] = 'Activated by deployWP';
 				}
