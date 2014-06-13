@@ -64,8 +64,7 @@ class deploy_activated_plugins extends deployWP_module {
 
 	function add_deploy_notice($plugin_meta, $plugin_file, $plugin_data, $status){
 
-		if(file)
-		if(file_exists($this->deploy_file)){
+		if(file_exists($this->deploy_file) and in_array($this->env, $this->deploy_in)){
 			if($ac = json_decode(file_get_contents($this->deploy_file), JSON_ARRAY)){
 				if(in_array($plugin_file, $ac)){
 					$plugin_meta[] = 'Activated by deployWP';
