@@ -53,9 +53,11 @@ class deploy_activated_plugins extends deployWP_module {
 		/* Collect code goes here */
 		if(file_exists($this->deploy_file)){
 			if($ac = json_decode(file_get_contents($this->deploy_file), JSON_ARRAY)){
+				
 				if(!$current_ac = get_option('active_plugins') or !is_array($current_ac))
 					$current_ac = array();
-				update_option('active_plugins', array_merge($current_ac, $ac));
+				
+				update_option('active_plugins', array_unique(array_merge($current_ac, $ac)));
 
 			}
 
