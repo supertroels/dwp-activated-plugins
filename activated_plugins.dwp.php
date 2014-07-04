@@ -56,8 +56,16 @@ class deploy_activated_plugins extends deployWP_module {
 				
 				if(!$current_ac = get_option('active_plugins') or !is_array($current_ac))
 					$current_ac = array();
-				
-				update_option('active_plugins', array_unique(array_merge($current_ac, $ac)));
+
+				$insert_ac 		= array_merge($current_ac, $ac);
+				$avail_plugins 	= array_keys(get_plugins());
+				foreach($insert_ac as $key => $plugin){
+					if(!in_array($plugin, $avail_plugins)){
+						unset($incert_ac[$key]);
+					}
+				}
+
+				update_option('active_plugins', array_unique($insert_ac));
 
 			}
 
